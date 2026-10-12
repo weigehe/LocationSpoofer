@@ -27,13 +27,16 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build APK (app-ui模块)
-        run: |
-          ./gradlew :app-ui:assembleDebug
-          find . -name "*.apk"
+      - name: List Gradle Tasks
+        run: ./gradlew tasks
 
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: LocationSpoofer-APK
-          path: ./**/build/outputs/apk/**/*.apk
+      # - name: Build APK
+      #   run: |
+      #     ./gradlew :app-ui:assembleDebug
+      #     find . -name "*.apk"
+
+      # - name: Upload APK Artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: LocationSpoofer-APK
+      #     path: ./**/build/outputs/apk/**/*.apk
