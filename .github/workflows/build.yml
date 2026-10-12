@@ -1,11 +1,9 @@
 name: Build LocationSpoofer
+
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
-
-permissions:
-  contents: read
+  workflow_dispatch: # 支持手动点击运行
 
 jobs:
   build:
@@ -26,11 +24,12 @@ jobs:
           path: ~/.gradle
           key: gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
 
-      - name: Replace Gradle repository with Tsinghua mirror
-        run: |
-          sed -i 's|https\:\/\/repo.maven.apache.org/maven2|https\:\/\/mirrors.tuna.tsinghua.edu.cn/maven|g' build.gradle
-          sed -i 's|https\:\/\/dl.google.com/dl/android/maven2|https\:\/\/mirrors.tuna.tsinghua.edu.cn/android/repository|g' build.gradle
-          sed -i 's|https\:\/\/services.gradle.org\/distributions|https\:\/\/mirrors.tuna.tsinghua.edu.cn/gradle|g' gradle/wrapper/gradle-wrapper.properties
+# 先注释掉sed镜像替换，先跑通再说
+#      - name: Replace Gradle repository with Tsinghua mirror
+#        run: |
+#          sed -i 's#https://repo.maven.apache.org/maven2#https://mirrors.tuna.tsinghua.edu.cn/maven#g' build.gradle
+#          sed -i 's#https://dl.google.com/dl/android/maven2#https://mirrors.tuna.tsinghua.edu.cn/android/repository#g' build.gradle
+#          sed -i 's#https://services.gradle.org/distributions#https://mirrors.tuna.tsinghua.edu.cn/gradle#g' gradle/wrapper/gradle-wrapper.properties
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
